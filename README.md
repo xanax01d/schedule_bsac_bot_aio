@@ -1,4 +1,4 @@
-# bsac_schedule_bot_aiogram
+# schedule_bsac_bot_private
 RU:
 Бот-расписание Белорусской государственной академии связи, написанный при использовании библиотеки aiogram
 
