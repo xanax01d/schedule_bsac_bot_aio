@@ -41,31 +41,27 @@ def print_logo():
 
 
 def deleting():
-	for i in range(len(table_list_1course_vo)):
-		tablename = table_list_1course_vo[i]
-		cursor.execute(f'DROP TABLE IF EXISTS {tablename};')
+	for i in range(len(table_list)):
+		cursor.execute(f'DROP TABLE IF EXISTS {table_list};')
 		base.commit()
 def create():
-	for i in range(len(table_list_1course_vo)):
-		tablename = table_list_1course_vo[i]
-		cursor.execute(f'CREATE TABLE IF NOT EXISTS {tablename}('
+	for i in table_list:
+		cursor.execute(f'CREATE TABLE IF NOT EXISTS {table_list}('
 					'day TEXT NOT NULL,'
 					'sc TEXT'
 					')')
 		base.commit()
 def save(gr,day,sc):
-	if gr in gr_list_1course_vo:
+	if gr in gr_list:
 		s = dict1.get(gr)
 		cursor.execute(f"SELECT sc FROM {s} WHERE day = '{day}'")
 		cursor.execute(f"INSERT INTO {s} VALUES (?,?);",(day,sc))
 		base.commit()
 def refetch():
-	for i in range(len(gr_list_1course_vo)):
-		gr = gr_list_1course_vo[i]
-		s = dict1.get(gr)
+	for group in gr_list:
+		s = dict1.get(group)
 		sd = dict2.get(s)
-		for i in range(len(days)):
-			day = days[i];
+		for day in days:
 			sh = gc.open_by_key(sd)
 			cursor.execute(f"SELECT sc FROM {s} WHERE day = '{day}'")
 			data_row = cursor.fetchone()
@@ -160,11 +156,11 @@ def refetch():
 				sc = f'{s1}\n{s2}\n{s3}\n{s4}\n{s5}\n{s6}'
 				if sc == '\n\n\n\n\n':
 					sc = 'Пар нет'
-				save(gr,day,sc)
+				save(group,day,sc)
 				d.clear()
 				sleep (5)
 				sc = None
-		print('The weekly schedule is saved for the group: ',gr)
+		print('The weekly schedule is saved for the group: ',group)
 		sleep(10)
 
 
